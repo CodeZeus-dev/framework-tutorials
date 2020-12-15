@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rubyOnRailsFundamentals.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ruby-on-rails-a-straightforward-primer">Ruby On Rails: A Straightforward Primer</h1>
+<p>There are two modes for implementing a Rails app,</p>
+<ul>
+<li>Static Mode</li>
+<li>Dynamic Mode</li>
+</ul>
+<p>In <em><strong>Static Mode</strong></em> there is no interaction with a database and the programme doesn't contain any models responsible for communicating with the databases.</p>
+<p>In <em><strong>Dynamic Mode</strong></em> the app implements CRUD workflow by interacting with a database from within the models of the app.</p>
+<hr>
+<h2 id="starting-a-new-project">Starting a new project</h2>
+<p>To create a new Rails project, simply execute the following in the terminal,</p>
+<pre class="hljs"><code><div>$ rails new ProjectName
+</div></code></pre>
+<p>Install all packages from within the Gemfile using bundle like so,</p>
+<pre class="hljs"><code><div>$ bundle install
+</div></code></pre>
+<p>Run the server and go to the localhost page to see if the app is successfully created,</p>
+<pre class="hljs"><code><div>$ rails server
+</div></code></pre>
+<p>OR</p>
+<pre class="hljs"><code><div>$ rails s -p 4001
+</div></code></pre>
+<p>In the second command, the port is defined to be equal to 4001.</p>
+<hr>
+<h2 id="static-mode">Static Mode</h2>
+<p>While in static mode, the programme does not interact with any databases and thus, does not contain any models.</p>
+<p>The 3 primary components are,</p>
+<ul>
+<li>Controller</li>
+<li>Route</li>
+<li>View</li>
+</ul>
+<p>To create a <code>controller</code> called Pages, execute the following command,</p>
+<pre class="hljs"><code><div>$ rails generate controller Pages
+</div></code></pre>
+<p>That creates all necessary files for the newly created <code>PagesController</code> (don't forget to use plural when generating a new controller).</p>
+<p>Let's say that we want to create a new route which takes the user to the homepage of the app. For that we need to execute the following steps,</p>
+<ol>
+<li>Add a controller action (method) called home (could also be index) inside of the PagesController class.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PagesController</span> &lt; ApplicationController</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">home</span></span>
+    <span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<p>By convention, we say that the Pages controller now has a home action.</p>
+<ol start="2">
+<li>We then create the route that relates the GET request with the controller by putting the following command in the routes file,</li>
+</ol>
+<pre class="hljs"><code><div>get <span class="hljs-string">'welcome'</span> =&gt; <span class="hljs-string">'pages#home'</span>
+</div></code></pre>
+<p>If we wanted to set our home page as the root route for our app ('/'), then we could do,</p>
+<pre class="hljs"><code><div>root <span class="hljs-string">'pages#home'</span>
+</div></code></pre>
+<p>The first part of the string <code>'pages#home'</code> corresponds to the controller we're referring to and the second one to the respective action.</p>
+<ol start="3">
+<li>Having created both the controller and the route for our pages homepage, the only thing missing is the view file. There is a convention (pattern) followed here as well. Inside of the views directory, we create another directory for the pages controller,</li>
+</ol>
+<pre class="hljs"><code><div>$ mkdir views/pages/
+</div></code></pre>
+<p>and then, a view file that has the action name in it, like so,</p>
+<pre class="hljs"><code><div>$ touch views/pages/home.html.erb
+</div></code></pre>
+<blockquote>
+<p>What's really important to note is that a controller's view file is different from a layout view file. In short, a layout file is an html file containing all information about the <code>head</code>, the <code>header</code> and <code>footer</code> as well as any CSS that the app is using. If you want to create something that shows up on every page of the app then you should put it in the layout file.</p>
+</blockquote>
+<blockquote>
+<p>The controller's view files contain standalone sections of html with some erb (embedded ruby) in them that solely correspond to a certain action of a specific controller. In order to have a complete HTML document for the app, we need to combine the layout with the controllers' view files by using &lt;%= yield %&amp;&gt; in the body of the layout file.</p>
+</blockquote>
+<p>Think of the layout being the template of the app, containing the child templates (controller's views) in its body.</p>
+<p>A useful piece of info would be how to import custom Google Fonts for the apps we're creating,</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://fonts.googleapis.com/css?family=Oxygen,300,400,300"</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/css"</span>&gt;</span>
+</div></code></pre>
+<p>This example uses a specific font family but you can change it to whichever one you want to work with.</p>
+<hr>
+<h2 id="working-with-data-and-a-database">Working with data and a Database</h2>
+<p>In this mode, one extra element must be introduced, called the Model, whose role is to interact with the database and work with data. The workflow for creating a new model, is the following,</p>
+<ol>
+<li>Create a new rails model</li>
+</ol>
+<pre class="hljs"><code><div>$ rails generate model Message
+</div></code></pre>
+<p>Make sure that the model name is in singular.</p>
+<ol start="2">
+<li>Inside of the db/migrate/ dir find the database table created and notice that it has a timestamp attribute to it by default. The timestamp corresponds to 2 columns in the table, namely, <code>created_at</code> and <code>updated_at</code>, which save the datetime at creation or update. A sample new column would be,</li>
+</ol>
+<pre class="hljs"><code><div>    t.text <span class="hljs-symbol">:context</span>
+</div></code></pre>
+<p>where <code>text</code> defines the type of the column's data (could be t.string for example), and <code>:context</code> is the column's name (context).</p>
+<ol start="3">
+<li>After editting the table's contents, we need to update the database to save the changes, for that, execute one of the following,</li>
+</ol>
+<pre class="hljs"><code><div>$ bundle <span class="hljs-built_in">exec</span> rake db:migrate
+</div></code></pre>
+<p>OR</p>
+<pre class="hljs"><code><div>$ rails db:migrate
+</div></code></pre>
+<ol start="4">
+<li>After putting in all desired columns, we can seed the table with our default data that are found inside the db/seeds.rb file, using the following command</li>
+</ol>
+<pre class="hljs"><code><div>bundle <span class="hljs-built_in">exec</span> rake db:seed
+</div></code></pre>
+<p>Our migrations file after these changes would look like this,</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CreateMessages</span> &lt; ActiveRecord::Migrations</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">change</span></span>
+        create_table <span class="hljs-symbol">:messages</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|t|</span>
+            t.text <span class="hljs-symbol">:content</span>
+            t.timestamps
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<hr>
+<h2 id="example-messaging-functionality">Example Messaging Functionality</h2>
+<p>Let's assume that we would like to add some functionality to our app so that we can create a message on the website using a form, and then post it there and having it recorded in the database.</p>
+<p>First, we need to <code>GET</code> the page that contains the form. For that, we need to work with the router and controller,</p>
+<h4 id="router">Router</h4>
+<pre class="hljs"><code><div>get <span class="hljs-string">'/messages/new'</span> =&gt; <span class="hljs-string">'messages#new'</span>
+</div></code></pre>
+<p>That means that for creating a new message, we access the 'url/messages/new' route in the url and that communicates with the messages controller's new action (new method).</p>
+<h4 id="controller">Controller</h4>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">new</span></span>
+    @message = Message.new
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<p>In the controller, we create a new action that creates a new instance of the Message class and returns it to the <code>new.html.erb</code> view file.</p>
+<p>We want to post the message for the data to be recorder in the database, so, we need a <code>POST</code> route.</p>
+<h4 id="router">Router</h4>
+<pre class="hljs"><code><div>post <span class="hljs-string">'messages'</span> =&gt; <span class="hljs-string">'messages#create'</span>
+</div></code></pre>
+<h4 id="controller">Controller</h4>
+<p>We need to have access to the message attributes from inside the message table, so that we can safely collect data from the form and update the database with them, and for that we need the following private action inside of the MessagesController,</p>
+<pre class="hljs"><code><div>private
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">message_params</span></span>
+    params.<span class="hljs-keyword">require</span>(<span class="hljs-symbol">:message</span>).permit(<span class="hljs-symbol">:content</span>)
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<p>After writing the new and message_params actions, we need to write the <code>create</code> action that creates the message,</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create</span></span>
+    @message = Message.new(message_params)
+    <span class="hljs-keyword">if</span> @message.save
+        redirect_to <span class="hljs-string">'/messages'</span>
+    <span class="hljs-keyword">else</span>
+        render <span class="hljs-string">'new'</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<p>Essentially, if the new message is successfully saved in the database, the user gets redirected to the '/messages' route. If not, the user is taken to the 'new' route.</p>
+<p>For creating a new message,</p>
+<ol>
+<li>Create a view file</li>
+</ol>
+<pre class="hljs"><code><div>$ touch app/views/messages/new.html.erb
+</div></code></pre>
+<p>Let's create the form inside that view file,</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">form_for</span>(@<span class="hljs-attr">message</span>) <span class="hljs-attr">do</span> |<span class="hljs-attr">f</span>| %&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">f.label</span> <span class="hljs-attr">:message</span> %&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">f.text_area</span> <span class="hljs-attr">:content</span> %&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"actions"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">f.submit</span> "<span class="hljs-attr">Create</span>" %&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">%</span> <span class="hljs-attr">end</span> %&gt;</span>
+</div></code></pre>
+<p>To access the form from the home page, let's enter a link on the home page,</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">link_to</span> '<span class="hljs-attr">New</span> <span class="hljs-attr">Message</span>', '<span class="hljs-attr">messages</span>/<span class="hljs-attr">new</span>'%&gt;</span>
+</div></code></pre>
+<p>According to the 7 actions of Rails,</p>
+<img width="595" alt="Screenshot 2020-12-15 at 00 29 23" src="https://user-images.githubusercontent.com/65397514/102262731-1cd09d00-3f1c-11eb-85e5-22651dc8e1d2.png">
+<p>instead of defining each route separately in the route file, we can assign all routes to a controller by typing,</p>
+<pre class="hljs"><code><div>resources <span class="hljs-symbol">:messages</span>
+</div></code></pre>
+<p>For using all routes except for 2 specific ones, use,</p>
+<pre class="hljs"><code><div>resources <span class="hljs-symbol">:messages</span>, <span class="hljs-symbol">only:</span> [<span class="hljs-symbol">:index</span>, <span class="hljs-symbol">:show</span>]
+</div></code></pre>
+
+</body>
+</html>
