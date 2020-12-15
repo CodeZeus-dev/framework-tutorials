@@ -95,12 +95,6 @@ $ touch views/pages/home.html.erb
 
 Think of the layout being the template of the app, containing the child templates (controller's views) in its body.
 
-A useful piece of info would be how to import custom Google Fonts for the apps we're creating,
-```html
-<link href="https://fonts.googleapis.com/css?family=Oxygen,300,400,300" rel="stylesheet" type="text/css">
-```
-This example uses a specific font family but you can change it to whichever one you want to work with.
-
 ---
 
 ## Working with data and a Database
