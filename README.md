@@ -1,6 +1,6 @@
 # Ruby On Rails: A Straightforward Primer
 
-The content of this page was created by [Constantine Akritides]("https://github.com/CodeZeus-dev")
+The content of this page was created by [Constantine Akritides](https://github.com/CodeZeus-dev)
 
 There are two modes for implementing a Rails app, 
 - Static Mode
